@@ -55,9 +55,6 @@ exports.config = {
             args: [
                 // '-headless' // Optional: add headless mode if needed
             ],
-        },
-        'wdio:geckodriverOptions': {
-            binary: '/usr/local/bin/geckodriver' 
         }
     }],
 
