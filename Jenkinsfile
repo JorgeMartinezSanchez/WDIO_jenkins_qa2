@@ -6,23 +6,26 @@ pipeline {
     }
 
     stages {
-        steps {
-            echo 'Instalando dependencias...'
-            sh 'npm ci'
-            echo 'Ejecutando pruebas con WebdriverIO...'
-            sh 'npx wdio run wdio.conf.js'
+        stage('Build & Test') {
+            steps {
+                echo 'Instalando dependencias...'
+                sh 'npm ci'
+                echo 'Ejecutando pruebas con WebdriverIO...'
+                sh 'npx wdio run wdio.conf.js'
+            }
         }
     }
 
     post {
         always {
-            // Genera y publica el reporte de Allure
+            echo 'Generando y publicando el reporte de Allure...'
             allure([
                 includeProperties: false,
                 jdk: '',
                 properties: [],
-                reportBuildPolicy: 'ALWAYS', // Genera el reporte siempre, aunque fallen los tests
-                results: [[path: 'myproject/target/allure-results']] // Ruta a los resultados crudos
+                reportBuildPolicy: 'ALWAYS',
+                // Ruta corregida para un proyecto Node.js
+                results: [[path: 'allure-results']] 
             ])
         }
     }
